@@ -98,7 +98,7 @@ resource "aws_ecs_service" "smtp_proxy_service" {
   cluster         = aws_ecs_cluster.orion_cc.id
   task_definition = aws_ecs_task_definition.smtp_proxy_task.arn
 
-  iam_role      = aws_iam_role.ecs_service_role.arn
+  iam_role      = aws_iam_role.ecs_service_role.name
   launch_type   = "EC2"
   desired_count = 1
 
@@ -106,7 +106,7 @@ resource "aws_ecs_service" "smtp_proxy_service" {
 
   load_balancer {
     elb_name       = aws_elb.ecs_load_balancer.name
-    container_port = 80
+    container_port = 25
     container_name = "nginx-smtp-proxy"
   }
 }
