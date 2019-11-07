@@ -1,0 +1,19 @@
+{
+  "name": "nginx-smtp-auth",
+  "version": "1.0.0",
+  "description": "Allow access to a SMTP server.",
+  "main": "server.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Dmitrii Ageev <d.ageev@gmail.com>",
+  "license": "GPLv2"
+}

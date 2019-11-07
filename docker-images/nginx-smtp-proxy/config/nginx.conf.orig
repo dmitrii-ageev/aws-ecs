@@ -1,0 +1,51 @@
+user nginx;
+worker_processes auto;
+error_log /var/log/nginx/error.log;
+pid /run/nginx.pid;
+
+# Load dynamic modules. See /usr/share/doc/nginx/README.dynamic.
+include /usr/share/nginx/modules/*.conf;
+
+events {
+    worker_connections 1024;
+}
+
+mail {
+    server_name               mail.example.com;
+    #auth_http                 $ENV{"SMTP_AUTH_HOST"}:$ENV{"SMTP_AUTH_PORT"};
+    auth_http                 http://127.0.0.1:8080;
+
+    proxy                     on;
+    proxy_pass_error_message  on;
+
+    ssl                       on;
+    ssl_certificate           /etc/pki/tls/certs/example.com.crt;
+    ssl_certificate_key       /etc/pki/tls/private/example.com.key;
+    ssl_protocols             TLSv1 TLSv1.1 TLSv1.2; # Dropping SSLv3, ref: POODLE
+    ssl_ciphers               HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers on;
+    ssl_session_cache         shared:SSL:10m;
+    ssl_session_timeout       10m;
+
+    imap_capabilities         "IMAP4rev1" "UIDPLUS" "IDLE" "LITERAL +" "QUOTA";
+    pop3_auth                 plain apop cram-md5;
+    pop3_capabilities         "LAST" "TOP" "USER" "PIPELINING" "UIDL";
+
+
+    server {
+        listen     25;
+        protocol   smtp;
+        smtp_auth  login plain cram-md5;
+    }
+
+    server {
+        listen    110;
+        protocol  pop3;
+        pop3_auth plain apop cram-md5;
+    }
+
+     server {
+        listen   143;
+        protocol imap;
+    }
+}

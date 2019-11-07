@@ -1,0 +1,28 @@
+[
+  {
+    "name": "nginx-smtp-proxy",
+    "image": "${proxy_image}",
+    "cpu": 10,
+    "memory": 400,
+    "essential": true,
+    "portMappings": [
+      {
+        "containerPort": 25,
+        "hostPort": 25 
+      }
+    ]
+  },
+  {
+    "name": "nginx-smtp-auth",
+    "image": "${auth_image}",
+    "cpu": 10,
+    "memory": 400,
+    "essential": true,
+    "portMappings": [
+      {
+        "containerPort": 8080,
+        "hostPort": 8080 
+      }
+    ]
+  }
+]
